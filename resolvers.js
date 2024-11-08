@@ -13,8 +13,9 @@ const resolvers = {
         const pokeDetails = await pokeDetailsResponse.json();
 
         return {
+          id: pokeDetails.id,
           name: pokeDetails.name,
-          url: pokemon.url,
+          url: pokemon.url,         
           types: pokeDetails.types.map(type => type.type.name),
           stats: pokeDetails.stats.map(stat => ({
             name: stat.stat.name,
@@ -37,11 +38,12 @@ const resolvers = {
     },
 
 
-    pokemon: async (_, { name }) => {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    pokemon: async (_, { id }) => {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
       const data = await response.json();
 
       return {
+        id: data.id,
         name: data.name,
         url: data.url,
         types: data.types.map(type => type.type.name),
